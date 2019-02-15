@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lender/ui/tabs/borrowed_tab.dart';
+import 'package:lender/ui/tabs/lent_tab.dart';
+import 'package:lender/ui/tabs/settings_tab.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -26,9 +29,9 @@ class HomePage extends StatelessWidget {
         body: TabBarView(
           physics: BouncingScrollPhysics(),
           children: <Widget>[
-            Container(child: Text("Borrowed"),),
-            Container(child: Text("Lent"),),
-            Container(child: Text("Settings"),)
+            BorrowedTab(),
+            LentTab(),
+            SettingsTab(),
           ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
