@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lender/ui/pages/add.dart';
 import 'package:lender/ui/pages/home.dart';
 
 void main() => runApp(Lender());
@@ -14,6 +15,9 @@ class Lender extends StatelessWidget {
         primarySwatch: Colors.pink,
       ),
       home: HomePage(),
+      routes: {
+        'add': (_)=> AddPage()
+      },
     );
   }
 }
