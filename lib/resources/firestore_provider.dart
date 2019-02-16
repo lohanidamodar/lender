@@ -17,4 +17,11 @@ class FirestoreProvider {
       .snapshots();
   }
 
+  Stream<QuerySnapshot> lent(String uid) {
+    return _firestore.collection("users")
+      .document(uid)
+      .collection('lent')
+      .snapshots();
+  }
+
 }

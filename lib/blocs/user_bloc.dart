@@ -8,6 +8,10 @@ class UserBloc {
     return _firestoreProvider.borrowed(uid);
   }
 
+  Stream<QuerySnapshot> lent(String uid) {
+    return _firestoreProvider.lent(uid);
+  }
+
 
 
 }
