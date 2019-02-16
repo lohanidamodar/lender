@@ -32,4 +32,12 @@ class FirestoreProvider {
       .add(item);
   }
 
+  Future<void> updateItem(String itemId, Map<String,dynamic> update, String type, String uid) {
+    return _firestore.collection('users')
+      .document(uid)
+      .collection(type)
+      .document(itemId)
+      .setData(update);
+  }
+
 }
