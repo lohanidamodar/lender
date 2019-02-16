@@ -12,11 +12,11 @@ class HomePage extends StatelessWidget {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(100),
           child: Container(
+            color: Theme.of(context).primaryColor,
             padding: EdgeInsets.only(top: 40),
             child: TabBar(
-              indicatorSize: TabBarIndicatorSize.label,
-              unselectedLabelColor: Colors.grey,
-              labelColor: Theme.of(context).primaryColor,
+              unselectedLabelColor: Colors.white54,
+              labelColor: Colors.white,
               isScrollable: false,
               tabs: <Widget>[
                 Tab(child: Text("Borrowed"),),
