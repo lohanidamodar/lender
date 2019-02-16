@@ -40,4 +40,11 @@ class FirestoreProvider {
       .setData(update,merge: true);
   }
 
+  Future<void> deleteItem(String itemId, String type, String uid) {
+    return _firestore.collection('users')
+      .document(uid)
+      .collection(type)
+      .document(itemId).delete();
+  }
+
 }

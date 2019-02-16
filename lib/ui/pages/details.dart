@@ -48,7 +48,11 @@ class DetailsPage extends StatelessWidget {
             ListTile(
               title: Text("Delete".toUpperCase()),
               trailing: Icon(Icons.delete),
-              onTap: (){},
+              onTap: (){
+                UserBlocProvider.of(context).deleteItem(
+                  document.documentID, type);
+                Navigator.pop(context);
+              },
             ),
 
           ],

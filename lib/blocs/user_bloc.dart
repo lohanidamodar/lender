@@ -53,6 +53,14 @@ class UserBloc {
     }
   }
 
+  Future<void> deleteItem(String itemId, String type) async {
+    try {
+      await _firestoreProvider.deleteItem(itemId, type, user.uid);
+    }catch(error){
+      print(error);
+    }
+  }
+
 
 
 }
