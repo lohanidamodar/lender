@@ -37,6 +37,22 @@ class UserBloc {
     }
   }
 
+  Future<void> markAsReturned(String itemId, String type) async {
+    try {
+      await _firestoreProvider.updateItem(itemId, {"returned":true}, type, user.uid);
+    }catch(error){
+      print(error);
+    }
+  }
+
+  Future<void> markAsUnreturned(String itemId, String type) async {
+    try {
+      await _firestoreProvider.updateItem(itemId, {"returned":false}, type, user.uid);
+    }catch(error){
+      print(error);
+    }
+  }
+
 
 
 }

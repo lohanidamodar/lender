@@ -37,7 +37,7 @@ class FirestoreProvider {
       .document(uid)
       .collection(type)
       .document(itemId)
-      .setData(update);
+      .setData(update,merge: true);
   }
 
 }

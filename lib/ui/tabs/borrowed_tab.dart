@@ -18,7 +18,7 @@ class BorrowedTab extends StatelessWidget {
           return ListView.builder(
             itemCount: documents.length,
             itemBuilder: (BuildContext context, int i){
-              return ItemWidget(document: documents[i]);
+              return ItemWidget(document: documents[i], type: 'borrowed',);
             },
           );
         }else{
