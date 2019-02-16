@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lender/blocs/auth_bloc_provider.dart';
+import 'package:lender/blocs/user_bloc_provider.dart';
 import 'package:lender/ui/pages/add.dart';
 import 'package:lender/ui/pages/home.dart';
 import 'package:lender/ui/pages/login.dart';
@@ -11,24 +12,26 @@ class Lender extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return AuthBlocProvider(
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Lender',
-        theme: ThemeData(
-          primarySwatch: Colors.pink,
-              buttonTheme: ButtonThemeData(
-                textTheme: ButtonTextTheme.primary,
-                buttonColor: Colors.pink,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))
-              ),
-              fontFamily: "Raleway",
+    return UserBlocProvider(
+      child: AuthBlocProvider(
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Lender',
+          theme: ThemeData(
+            primarySwatch: Colors.pink,
+                buttonTheme: ButtonThemeData(
+                  textTheme: ButtonTextTheme.primary,
+                  buttonColor: Colors.pink,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))
+                ),
+                fontFamily: "Raleway",
+          ),
+          home: MainScreen(),
+          routes: {
+            'add': (_)=> AddPage(),
+            'login': (_) => LoginPage()
+          },
         ),
-        home: MainScreen(),
-        routes: {
-          'add': (_)=> AddPage(),
-          'login': (_) => LoginPage()
-        },
       ),
     );
   }
