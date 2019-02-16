@@ -22,7 +22,7 @@ class Lender extends StatelessWidget {
                 buttonTheme: ButtonThemeData(
                   textTheme: ButtonTextTheme.primary,
                   buttonColor: Colors.pink,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40.0))
                 ),
                 fontFamily: "Raleway",
           ),

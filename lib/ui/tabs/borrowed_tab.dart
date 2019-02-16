@@ -20,7 +20,7 @@ class BorrowedTab extends StatelessWidget {
             itemBuilder: (BuildContext context, int i){
               return ListTile(
                 title: Text(documents[i]['name']),
-                subtitle: Text(documents[i]['from']['name']),
+                subtitle: Text(documents[i]['person']['name']),
                 trailing: Icon(Icons.arrow_forward_ios),
                 onTap: (){},
               );

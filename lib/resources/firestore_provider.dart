@@ -24,4 +24,11 @@ class FirestoreProvider {
       .snapshots();
   }
 
+  Future<DocumentReference> addItem(Map<String,dynamic> item, String type, String uid) {
+    return _firestore.collection('users')
+      .document(uid)
+      .collection(type)
+      .add(item);
+  }
+
 }
