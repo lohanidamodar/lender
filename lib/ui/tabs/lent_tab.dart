@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lender/blocs/auth_bloc_provider.dart';
 import 'package:lender/blocs/user_bloc_provider.dart';
+import 'package:lender/ui/widgets/item_widget.dart';
 
 class LentTab extends StatelessWidget {
   @override
@@ -19,12 +20,7 @@ class LentTab extends StatelessWidget {
           return ListView.builder(
             itemCount: documents.length,
             itemBuilder: (BuildContext context, int i){
-              return ListTile(
-                title: Text(documents[i]['name']),
-                subtitle: Text(documents[i]['person']['name']),
-                trailing: Icon(Icons.arrow_forward_ios),
-                onTap: (){},
-              );
+              return ItemWidget(document: documents[i],);
             },
           );
         }else{
