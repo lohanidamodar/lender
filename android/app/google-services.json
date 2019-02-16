@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "572475845393",
+    "firebase_url": "https://pblenderapp.firebaseio.com",
+    "project_id": "pblenderapp",
+    "storage_bucket": "pblenderapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:572475845393:android:6853277f6a20e2e0",
+        "android_client_info": {
+          "package_name": "com.popupbits.lender"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "572475845393-1k8tlvr99rvdsqnlhe65rkuod09l8knj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.popupbits.lender",
+            "certificate_hash": "67a7d9ac3de2b5587fd9cd8d0879becff84e60bc"
+          }
+        },
+        {
+          "client_id": "572475845393-1ulkcivuiienqnqthsrj6t5pjp22prjo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADG4s2aOzY0satJvLuy_uCgV2CPbiSWuk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "572475845393-1ulkcivuiienqnqthsrj6t5pjp22prjo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
