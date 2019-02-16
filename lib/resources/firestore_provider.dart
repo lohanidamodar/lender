@@ -25,6 +25,7 @@ class FirestoreProvider {
   }
 
   Future<DocumentReference> addItem(Map<String,dynamic> item, String type, String uid) {
+    item["returned"] = false;
     return _firestore.collection('users')
       .document(uid)
       .collection(type)
