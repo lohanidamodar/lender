@@ -179,9 +179,7 @@ class _AddPageState extends State<AddPage> {
       }
     };
     
-    bool res = await UserBlocProvider.of(context).addItem(item, type, 
-      AuthBlocProvider.of(context).user.uid
-    );
+    bool res = await UserBlocProvider.of(context).addItem(item, type);
 
     if(!res) setState(() {
       loading = false;

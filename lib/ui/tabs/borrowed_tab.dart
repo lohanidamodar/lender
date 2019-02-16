@@ -9,8 +9,7 @@ class BorrowedTab extends StatelessWidget {
   Widget build(BuildContext context) {
     if(AuthBlocProvider.of(context).user == null) return CircularProgressIndicator();
     return StreamBuilder(
-      stream: UserBlocProvider.of(context).borrowed(
-        AuthBlocProvider.of(context).user.uid),
+      stream: UserBlocProvider.of(context).borrowed(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if(snapshot.connectionState == ConnectionState.active) {
           if(!snapshot.hasData || snapshot.hasError) return _buildEmptyView();

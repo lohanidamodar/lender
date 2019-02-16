@@ -10,8 +10,7 @@ class LentTab extends StatelessWidget {
     if(AuthBlocProvider.of(context).user == null)
       return CircularProgressIndicator();
     return StreamBuilder(
-      stream: UserBlocProvider.of(context).lent(
-        AuthBlocProvider.of(context).user.uid),
+      stream: UserBlocProvider.of(context).lent(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if(snapshot.connectionState == ConnectionState.active) {
           if(!snapshot.hasData || snapshot.hasError) return _buildEmptyView();
