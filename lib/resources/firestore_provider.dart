@@ -9,4 +9,12 @@ class FirestoreProvider {
       "name": user.displayName,
     });
   }
+
+  Stream<QuerySnapshot> borrowed(String uid) {
+    return _firestore.collection("users")
+      .document(uid)
+      .collection('borrowed')
+      .snapshots();
+  }
+
 }
