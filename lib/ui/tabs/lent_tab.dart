@@ -1,13 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:lender/blocs/auth_bloc_provider.dart';
 import 'package:lender/blocs/user_bloc_provider.dart';
 import 'package:lender/ui/widgets/item_widget.dart';
 
 class LentTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    if(AuthBlocProvider.of(context).user == null)
+    if(UserBlocProvider.of(context).user == null)
       return CircularProgressIndicator();
     return StreamBuilder(
       stream: UserBlocProvider.of(context).lent(),
