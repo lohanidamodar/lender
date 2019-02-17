@@ -61,6 +61,10 @@ class UserBloc {
     }
   }
 
+  dispose() {
+    _user.close();
+  }
+
 
 
 }
