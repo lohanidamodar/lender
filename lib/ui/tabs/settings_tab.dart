@@ -8,12 +8,15 @@ class SettingsTab extends StatelessWidget {
       padding: EdgeInsets.all(20.0),
       child: Column(
         children: <Widget>[
-          ListTile(
-            title: Text("Logout"),
-            leading: Icon(Icons.exit_to_app),
-            onTap: (){
-              AuthBlocProvider.of(context).signOut();
-            },
+          Card(
+            elevation: 5.0,
+            child: ListTile(
+              title: Text("Logout"),
+              leading: Icon(Icons.exit_to_app),
+              onTap: (){
+                AuthBlocProvider.of(context).signOut();
+              },
+            ),
           )
         ],
       ),
