@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lender/blocs/user_bloc_provider.dart';
 import 'package:lender/model/item.dart';
+import 'package:lender/ui/pages/edit.dart';
 
 class DetailsPage extends StatelessWidget {
   final ItemModel item;
@@ -26,6 +27,11 @@ class DetailsPage extends StatelessWidget {
               elevation: 5.0,
               child: ListTile(
                 title: Text(item.category == 'Money' ? "${item.currency} ${item.amount}" : item.name),
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (_) => EditPage(item: item, type: type,)
+                  ));
+                },
                 subtitle: item.note != null ? Text(item.note) :null,
                 trailing: Icon(Icons.edit),
               ),

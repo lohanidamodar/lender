@@ -36,6 +36,15 @@ class UserBloc {
       return false;
     }
   }
+  Future<bool> updateItem(String itemId, Map<String,dynamic> item, String type) async {
+    try {
+      await _firestoreProvider.updateItem(itemId, item, type, user.uid);
+      return true;
+    }catch(error){
+      print(error);
+      return false;
+    }
+  }
 
   Future<void> markAsReturned(String itemId, String type) async {
     try {
