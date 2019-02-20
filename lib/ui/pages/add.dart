@@ -22,6 +22,9 @@ class _AddPageState extends State<AddPage> {
   String itemNotes;
   String personName;
   bool loading;
+  double amount;
+  String currency;
+
   final List<String> categories = ["Money", "Tech", "Books", "Games", "Clothes", "Others"];
 
   @override
@@ -126,13 +129,29 @@ class _AddPageState extends State<AddPage> {
           SizedBox(height: 10.0,),
           TextField(
             onChanged: (value) => setState((){
-              itemName = value;
+              if(category=="Money") {
+                amount = double.parse(value);
+              }else {
+                itemName = value;
+              }
             }),
             decoration: InputDecoration(
               border: OutlineInputBorder(),
-              hintText: "Name"
+              hintText: category == 'Money' ? "Amount" : "Name"
             ),
           ),
+          category == 'Money'
+            ? SizedBox(height: 10.0,): Container(height: 0,),
+          category == 'Money'
+            ? TextField(
+              onChanged: (value) => setState((){
+                currency = value;
+              }),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: "Currency"
+              ),
+            ) : Container(height: 0,),
           SizedBox(height: 10.0,),
           TextField(
             onChanged: (value) => setState((){
@@ -170,14 +189,27 @@ class _AddPageState extends State<AddPage> {
     setState(() {
       loading = true;
     });
-    Map<String,dynamic> item = {
-      "name":itemName,
-      "category":category,
-      "note":itemNotes,
-      "person": {
-        "name":personName
-      }
-    };
+    Map<String,dynamic> item;
+    if(category == 'Money') {
+     item = {
+        "amount":amount,
+        "currency":currency,
+        "category":category,
+        "note":itemNotes,
+        "person": {
+          "name":personName
+        }
+      };
+    }else{
+      item = {
+        "name":itemName,
+        "category":category,
+        "note":itemNotes,
+        "person": {
+          "name":personName
+        }
+      };
+    }
     
     bool res = await UserBlocProvider.of(context).addItem(item, type);
 

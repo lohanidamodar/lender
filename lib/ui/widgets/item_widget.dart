@@ -1,33 +1,33 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lender/model/item.dart';
 import 'package:lender/ui/pages/details.dart';
 
 class ItemWidget extends StatelessWidget {
   const ItemWidget({
     Key key,
-    @required this.document, this.type,
+    @required this.item, this.type,
   }) : super(key: key);
 
-  final DocumentSnapshot document;
+  final ItemModel item;
   final String type;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(document['name'],
+      title: Text(item.category == 'Money' ? "${item.currency} ${item.amount}" : item.name,
         style: TextStyle(
-          decoration: document['returned'] ? TextDecoration.lineThrough : TextDecoration.none
+          decoration: item.returned ? TextDecoration.lineThrough : TextDecoration.none
         )
       ),
-      subtitle: Text(document['person']['name'],
+      subtitle: Text(item.person.name,
         style: TextStyle(
-          decoration: document['returned'] ? TextDecoration.lineThrough : TextDecoration.none
+          decoration: item.returned ? TextDecoration.lineThrough : TextDecoration.none
         ),
       ),
       trailing: Icon(Icons.arrow_forward_ios),
       onTap: (){
         Navigator.push(context, MaterialPageRoute(
-          builder: (_) => DetailsPage(document: document, type:type)
+          builder: (_) => DetailsPage(item: item, type:type)
         ));
       },
     );

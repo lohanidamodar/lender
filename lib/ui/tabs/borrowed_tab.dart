@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lender/blocs/user_bloc_provider.dart';
+import 'package:lender/model/item.dart';
 import 'package:lender/ui/widgets/item_widget.dart';
 
 class BorrowedTab extends StatelessWidget {
@@ -17,7 +18,8 @@ class BorrowedTab extends StatelessWidget {
           return ListView.builder(
             itemCount: documents.length,
             itemBuilder: (BuildContext context, int i){
-              return ItemWidget(document: documents[i], type: 'borrowed',);
+              ItemModel item =ItemModel.fromDocumentSnapshot(documents[i]);
+              return ItemWidget(item: item, type: 'borrowed',);
             },
           );
         }else{
