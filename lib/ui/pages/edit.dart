@@ -39,7 +39,7 @@ class _EditPageState extends State<EditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add new thing"),
+        title: Text("Edit"),
       ),
       body: Container(
         padding: EdgeInsets.all(20.0),
@@ -64,6 +64,12 @@ class _EditPageState extends State<EditPage> {
                 itemName = value;
               }
             }),
+            validator: (value){
+              if(value.isEmpty)
+                return item.category == "Money"
+                  ? "Amount is required"
+                  : "Item name is required";
+            },
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               hintText: item.category == 'Money' ? "Amount" : "Name"
@@ -77,6 +83,10 @@ class _EditPageState extends State<EditPage> {
               onSaved: (value) => setState((){
                 currency = value;
               }),
+              validator: (value){
+                if(value.isEmpty)
+                  return "Currency is required";
+              },
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: "Currency"
@@ -102,6 +112,10 @@ class _EditPageState extends State<EditPage> {
             onSaved: (value) => setState((){
               personName = value;
             }),
+            validator: (value){
+              if(value.isEmpty)
+                return "Person name is required";
+            },
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               hintText: "Name"
@@ -118,6 +132,8 @@ class _EditPageState extends State<EditPage> {
   }
 
   void _save(BuildContext context) async {
+    if(!_formKey.currentState.validate())
+      return;
     setState(() {
       loading = true;
     });
