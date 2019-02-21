@@ -16,9 +16,9 @@ class EditPage extends StatefulWidget {
 }
 
 class _EditPageState extends State<EditPage> {
-  final GlobalKey<FormState> _formKey = GlobalKey();
   String type;
   bool loading;
+  final GlobalKey<FormState> _formKey = GlobalKey();
   final Map<String,dynamic> _formData = {};
   final ItemModel item;
 

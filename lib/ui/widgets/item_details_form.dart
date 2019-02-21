@@ -7,7 +7,8 @@ class ItemDetailsForm extends StatelessWidget {
   const ItemDetailsForm({
     Key key,
     @required GlobalKey<FormState> formKey,
-    @required this.item,
+    this.item,
+    this.category,
     @required this.type,
     @required this.loading,
     @required this.onSubmit,
@@ -16,6 +17,7 @@ class ItemDetailsForm extends StatelessWidget {
 
   final GlobalKey<FormState> _formKey;
   final ItemModel item;
+  final String category;
   final String type;
   final bool loading;
   final Function onSubmit;
@@ -27,29 +29,30 @@ class ItemDetailsForm extends StatelessWidget {
       key: _formKey,
       child: ListView(
         children: <Widget>[
-          Text("${item.category} details"),
+          Text("${item != null ? item.category : category} details"),
           SizedBox(height: 10.0,),
           TextFormField(
-            initialValue: item.category == 'Money' ? "${item.amount}" : item.name,
+            initialValue: item != null ? item.category == 'Money' ? "${item.amount}" : item.name : "",
             onSaved: (value) {
-              onSaveField(item.category == 'Money' ? "amount": "name", double.parse(value));
+              onSaveField(
+                (item != null ? item.category == "Money" : category == "Money") ? "amount": "name",  (item != null ? item.category == "Money" : category == "Money") ? double.parse(value) :value);
             },
             validator: (value){
               if(value.isEmpty)
-                return item.category == "Money"
+                return (item != null ? item.category == "Money" : category == "Money")
                   ? "Amount is required"
                   : "Item name is required";
             },
             decoration: InputDecoration(
               border: OutlineInputBorder(),
-              hintText: item.category == 'Money' ? "Amount" : "Name"
+              hintText: (item != null ? item.category == "Money" : category == "Money") ? "Amount" : "Name"
             ),
           ),
-          item.category == 'Money'
+          (item != null ? item.category == "Money" : category == "Money")
             ? SizedBox(height: 10.0,): Container(height: 0,),
-          item.category == 'Money'
+          (item != null ? item.category == "Money" : category == "Money")
             ? TextFormField(
-              initialValue: item.currency,
+              initialValue: item != null ? item.currency : "NPR",
               onSaved: (value)=> onSaveField("currency", value),
               validator: (value){
                 if(value.isEmpty)
@@ -62,7 +65,7 @@ class ItemDetailsForm extends StatelessWidget {
             ) : Container(height: 0,),
           SizedBox(height: 10.0,),
           TextFormField(
-            initialValue: item.note,
+            initialValue: item != null ? item.note : "",
             onSaved: (value)=> onSaveField("note", value),
             maxLines: 3,
             decoration: InputDecoration(
@@ -74,7 +77,7 @@ class ItemDetailsForm extends StatelessWidget {
           Text(type=='borrowed' ? "Borrowed from" : "Lent to"),
           SizedBox(height: 10.0,),
           TextFormField(
-            initialValue: item.person.name,
+            initialValue: item != null ? item.person.name : "",
             onSaved: (value)=> onSaveField("person", {"name":value}),
             validator: (value){
               if(value.isEmpty)

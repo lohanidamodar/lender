@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lender/blocs/auth_bloc_provider.dart';
 import 'package:lender/blocs/user_bloc_provider.dart';
+import 'package:lender/ui/widgets/item_details_form.dart';
 import 'package:lender/ui/widgets/raised_button_widget.dart';
 
 class AddPage extends StatefulWidget {
@@ -16,14 +17,11 @@ class AddPage extends StatefulWidget {
 
 class _AddPageState extends State<AddPage> {
   bool formOne;
-  String type;
   String category;
-  String itemName;
-  String itemNotes;
-  String personName;
+  String type;
   bool loading;
-  double amount;
-  String currency;
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  final Map<String,dynamic> _formData = {};
 
   final List<String> categories = ["Money", "Tech", "Books", "Games", "Clothes", "Others"];
 
@@ -122,98 +120,24 @@ class _AddPageState extends State<AddPage> {
   }
 
   Widget _buildFormTwo(BuildContext context) {
-    return Container(
-      child: ListView(
-        children: <Widget>[
-          Text("$category details"),
-          SizedBox(height: 10.0,),
-          TextField(
-            onChanged: (value) => setState((){
-              if(category=="Money") {
-                amount = double.parse(value);
-              }else {
-                itemName = value;
-              }
-            }),
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: category == 'Money' ? "Amount" : "Name"
-            ),
-          ),
-          category == 'Money'
-            ? SizedBox(height: 10.0,): Container(height: 0,),
-          category == 'Money'
-            ? TextField(
-              onChanged: (value) => setState((){
-                currency = value;
-              }),
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: "Currency"
-              ),
-            ) : Container(height: 0,),
-          SizedBox(height: 10.0,),
-          TextField(
-            onChanged: (value) => setState((){
-              itemNotes = value;
-            }),
-            maxLines: 3,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: "Additional notes"
-            ),
-          ),
-          SizedBox(height: 30.0,),
-          Text(type=='borrowed' ? "Borrowed from" : "Lent to"),
-          SizedBox(height: 10.0,),
-          TextField(
-            onChanged: (value) => setState((){
-              personName = value;
-            }),
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: "Name"
-            ),
-          ),
-          SizedBox(height: 10.0,),
-          PBRaisedButton(
-            child: Text("Save".toUpperCase()),
-            onPressed: loading ? null : () => _save(context),
-          )
-        ],
-      ),
-    );
+    return ItemDetailsForm(formKey: _formKey,onSaveField: _saveField,onSubmit: _save,loading: loading,type: type, category: category,);
+  }
+
+  void _saveField(String key, dynamic value) {
+    _formData[key] = value;
   }
 
   void _save(BuildContext context) async {
+    if(!_formKey.currentState.validate())
+      return;
     setState(() {
       loading = true;
     });
-    Map<String,dynamic> item;
-    if(category == 'Money') {
-     item = {
-        "amount":amount,
-        "currency":currency,
-        "category":category,
-        "note":itemNotes,
-        "person": {
-          "name":personName
-        }
-      };
-    }else{
-      item = {
-        "name":itemName,
-        "category":category,
-        "note":itemNotes,
-        "person": {
-          "name":personName
-        }
-      };
-    }
-    
-    bool res = await UserBlocProvider.of(context).addItem(item, type);
+    _formKey.currentState.save();
+    _formData['category'] = category;
+    bool res = await UserBlocProvider.of(context).addItem(_formData, type);
 
-    if(!res) setState(() {
+    setState(() {
       loading = false;
     });
     if(res) Navigator.pop(context);
