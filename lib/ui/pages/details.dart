@@ -32,7 +32,7 @@ class DetailsPage extends StatelessWidget {
                     builder: (_) => EditPage(item: item, type: type,)
                   ));
                 },
-                subtitle: item.note != null ? Text(item.note) :null,
+                subtitle: item.note != null && item.note.isNotEmpty ? Text(item.note) :null,
                 trailing: Icon(Icons.edit),
               ),
             ),
