@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lender/blocs/user_bloc_provider.dart';
 import 'package:lender/model/item.dart';
-import 'package:lender/ui/widgets/raised_button_widget.dart';
+import 'package:lender/ui/widgets/item_details_form.dart';
 
 class EditPage extends StatefulWidget {
   final String type;
@@ -18,12 +18,8 @@ class EditPage extends StatefulWidget {
 class _EditPageState extends State<EditPage> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   String type;
-  String itemName;
-  String itemNotes;
-  String personName;
   bool loading;
-  double amount;
-  String currency;
+  final Map<String,dynamic> _formData = {};
   final ItemModel item;
 
   _EditPageState(this.item);
@@ -49,86 +45,18 @@ class _EditPageState extends State<EditPage> {
   }
 
   Widget _buildFormTwo(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: ListView(
-        children: <Widget>[
-          Text("${item.category} details"),
-          SizedBox(height: 10.0,),
-          TextFormField(
-            initialValue: item.category == 'Money' ? "${item.amount}" : item.name,
-            onSaved: (value) => setState((){
-              if(item.category=="Money") {
-                amount = double.parse(value);
-              }else {
-                itemName = value;
-              }
-            }),
-            validator: (value){
-              if(value.isEmpty)
-                return item.category == "Money"
-                  ? "Amount is required"
-                  : "Item name is required";
-            },
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: item.category == 'Money' ? "Amount" : "Name"
-            ),
-          ),
-          item.category == 'Money'
-            ? SizedBox(height: 10.0,): Container(height: 0,),
-          item.category == 'Money'
-            ? TextFormField(
-              initialValue: item.currency,
-              onSaved: (value) => setState((){
-                currency = value;
-              }),
-              validator: (value){
-                if(value.isEmpty)
-                  return "Currency is required";
-              },
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: "Currency"
-              ),
-            ) : Container(height: 0,),
-          SizedBox(height: 10.0,),
-          TextFormField(
-            initialValue: item.note,
-            onSaved: (value) => setState((){
-              itemNotes = value;
-            }),
-            maxLines: 3,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: "Additional notes"
-            ),
-          ),
-          SizedBox(height: 30.0,),
-          Text(type=='borrowed' ? "Borrowed from" : "Lent to"),
-          SizedBox(height: 10.0,),
-          TextFormField(
-            initialValue: item.person.name,
-            onSaved: (value) => setState((){
-              personName = value;
-            }),
-            validator: (value){
-              if(value.isEmpty)
-                return "Person name is required";
-            },
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: "Name"
-            ),
-          ),
-          SizedBox(height: 10.0,),
-          PBRaisedButton(
-            child: Text("Save".toUpperCase()),
-            onPressed: loading ? null : () => _save(context),
-          )
-        ],
-      ),
+    return ItemDetailsForm(
+      formKey: _formKey,
+      item: item,
+      type: type,
+      loading: loading,
+      onSubmit: _save,
+      onSaveField: _saveField,
     );
+  }
+
+  void _saveField(String key, dynamic value) {
+    _formData[key] = value;
   }
 
   void _save(BuildContext context) async {
@@ -138,29 +66,7 @@ class _EditPageState extends State<EditPage> {
       loading = true;
     });
     _formKey.currentState.save();
-    Map<String,dynamic> updated;
-    if(item.category == 'Money') {
-     updated = {
-        "amount":amount,
-        "currency":currency,
-        "category":item.category,
-        "note":itemNotes,
-        "person": {
-          "name":personName
-        }
-      };
-    }else{
-      updated = {
-        "name":itemName,
-        "category":item.category,
-        "note":itemNotes,
-        "person": {
-          "name":personName
-        }
-      };
-    }
-    print(updated);
-    bool res = await UserBlocProvider.of(context).updateItem(item.documentID,updated, type);
+    bool res = await UserBlocProvider.of(context).updateItem(item.documentID,_formData, type);
 
     setState(() {
       loading = false;
@@ -171,3 +77,4 @@ class _EditPageState extends State<EditPage> {
   }
 
 }
+
